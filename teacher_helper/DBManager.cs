@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace teacher_helper
         private String db_pwd = "111";
         private MySqlConnection connection;
 
-        DBManager() { }
+        public DBManager() { }
         public DBManager(String usr, String password)
         {
             this.user = usr;
@@ -42,6 +43,41 @@ namespace teacher_helper
             mySqlDataReader.Close();
             connection.Close();
             return flag;
+        }
+
+        //查询
+        public DataTable Query()
+        {
+            String connsr = "server=" + this.server + " ;port=" + this.port + "; user=" + this.db_user + " ;password= " + this.db_pwd + ";database=" + database;
+            this.connection = new MySqlConnection(connsr);
+            connection.Open();
+            String command = "select * from yoyo order by id";
+            MySqlCommand mySqlCommand = new MySqlCommand(command, connection);
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(command, connection);
+            DataSet dataSet = new DataSet();
+            mySqlDataAdapter.Fill(dataSet, "yoyo");
+            DataTable table = dataSet.Tables[0];
+            connection.Close();
+            return table;
+        }
+
+        //增加
+        public void Insert(DataTable dt)
+        {
+            
+        } 
+
+        //更新
+        public void Update(DataTable dt)
+        {
+
+        }
+
+
+        //删除
+        public void Delete(DataTable dt)
+        {
+            
         }
     }
 }
