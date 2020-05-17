@@ -69,9 +69,6 @@ namespace teacher_helper
             String connsr = "server=" + this.server + " ;port=" + this.port + "; user=" + this.db_user + " ;password= " + this.db_pwd + ";database=" + database;
             this.connection = new MySqlConnection(connsr);
             connection.Open();
-            /*String command = "insert into ";
-            MySqlCommand mySqlCommand = new MySqlCommand(command, connection);*/
-            MySqlCommandBuilder update = new MySqlCommandBuilder(this.mySqlDataAdapter);
             try
             {
                 this.mySqlDataAdapter.Update(dt);
