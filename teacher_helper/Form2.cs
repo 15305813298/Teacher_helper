@@ -15,6 +15,7 @@ namespace teacher_helper
         private DataTable dataTable;
         private string user = "";
         private int init_count = 0;
+        private DBManager dBManager = new DBManager();
         public Form2(String usr)
         {
             user = usr;
@@ -66,7 +67,6 @@ namespace teacher_helper
 
         private void BindData()
         {
-            DBManager dBManager = new DBManager();
             dataTable = dBManager.Query();
             init_count = dataTable.Rows.Count;//保存数据数量
             this.dataGridView1.AutoGenerateColumns = false;
@@ -100,7 +100,7 @@ namespace teacher_helper
 
         private void button1_Click(object sender, EventArgs e)//数据保存
         {
-            
+            dBManager.Update(dataTable);
         }
     }
 }

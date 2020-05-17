@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace teacher_helper
@@ -17,6 +18,7 @@ namespace teacher_helper
         private String db_user = "root";
         private String db_pwd = "111";
         private MySqlConnection connection;
+        MySqlDataAdapter mySqlDataAdapter;
 
         public DBManager() { }
         public DBManager(String usr, String password)
@@ -53,31 +55,32 @@ namespace teacher_helper
             connection.Open();
             String command = "select * from yoyo order by id";
             MySqlCommand mySqlCommand = new MySqlCommand(command, connection);
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(command, connection);
+            this.mySqlDataAdapter = new MySqlDataAdapter(command, connection);
             DataSet dataSet = new DataSet();
-            mySqlDataAdapter.Fill(dataSet, "yoyo");
+            this.mySqlDataAdapter.Fill(dataSet, "yoyo");
             DataTable table = dataSet.Tables[0];
             connection.Close();
             return table;
         }
 
-        //增加
-        public void Insert(DataTable dt)
-        {
-            
-        } 
-
         //更新
         public void Update(DataTable dt)
         {
-
-        }
-
-
-        //删除
-        public void Delete(DataTable dt)
-        {
-            
+            String connsr = "server=" + this.server + " ;port=" + this.port + "; user=" + this.db_user + " ;password= " + this.db_pwd + ";database=" + database;
+            this.connection = new MySqlConnection(connsr);
+            connection.Open();
+            /*String command = "insert into ";
+            MySqlCommand mySqlCommand = new MySqlCommand(command, connection);*/
+            MySqlCommandBuilder update = new MySqlCommandBuilder(this.mySqlDataAdapter);
+            try
+            {
+                this.mySqlDataAdapter.Update(dt);
+            }
+            catch (MySqlException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            connection.Close();
         }
     }
 }
