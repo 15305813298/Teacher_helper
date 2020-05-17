@@ -27,6 +27,8 @@ namespace teacher_helper
             this.label1.ForeColor = Color.Red;
             this.label1.Text = "欢迎" + this.user + "老师";
             this.CenterToScreen();
+            this.dataGridView1.Columns[2].DefaultCellStyle.NullValue = "已完成";
+            this.dataGridView1.Columns[7].DefaultCellStyle.NullValue = "优秀";
             BindData();
         }
 
@@ -72,7 +74,7 @@ namespace teacher_helper
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DataSource = dataTable;
             this.dataGridView1.VirtualMode = true;
-            for(int i = 0; i < 9; i++)
+            for (int i = 0; i < 9; i++)
             {
                 this.dataGridView1.Columns[i].DataPropertyName = dataTable.Columns[i].ToString();
             }
@@ -100,6 +102,7 @@ namespace teacher_helper
 
         private void button1_Click(object sender, EventArgs e)//数据保存
         {
+            this.dataGridView1.EndEdit();
             dBManager.Update(dataTable);
         }
     }

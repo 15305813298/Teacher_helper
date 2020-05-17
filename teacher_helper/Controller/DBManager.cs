@@ -12,7 +12,7 @@ namespace teacher_helper
     public class DBManager
     {
         private String user, pwd;
-        private String server = "149.248.3.85";
+        private String server = "127.0.0.1";
         private String database = "teacher";
         private String port = "3306";
         private String db_user = "root";
@@ -59,7 +59,10 @@ namespace teacher_helper
             DataSet dataSet = new DataSet();
             this.mySqlDataAdapter.Fill(dataSet, "yoyo");
             DataTable table = dataSet.Tables[0];
+            table.Columns[2].DefaultValue = "已完成";
+            table.Columns[7].DefaultValue = "优秀";
             connection.Close();
+            connection.Dispose();
             return table;
         }
 
@@ -69,6 +72,7 @@ namespace teacher_helper
             String connsr = "server=" + this.server + " ;port=" + this.port + "; user=" + this.db_user + " ;password= " + this.db_pwd + ";database=" + database;
             this.connection = new MySqlConnection(connsr);
             connection.Open();
+            MySqlCommandBuilder sb = new MySqlCommandBuilder(mySqlDataAdapter);
             try
             {
                 this.mySqlDataAdapter.Update(dt);
@@ -78,6 +82,7 @@ namespace teacher_helper
                 MessageBox.Show(e.Message);
             }
             connection.Close();
+            connection.Dispose();
         }
     }
 }
