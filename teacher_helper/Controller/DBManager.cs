@@ -12,7 +12,7 @@ namespace teacher_helper
     public class DBManager
     {
         private String user, pwd;
-        private String server = "139.248.3.85";
+        private String server = "149.248.3.85";
         private String database = "teacher";
         private String port = "3306";
         private String db_user = "root";
